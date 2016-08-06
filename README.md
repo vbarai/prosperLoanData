@@ -3,7 +3,7 @@ My visualization is for a loan data. There are 2 graphs, one shows the loan dist
 Second graph shows loan distribution against the employment duration in months.
 
 # Design 
-Yet there is no design change due to feedback received .
+Yet there is no design change as yet no feedback received .
 
 # Feedback 
 Yet there is no feedback received.
