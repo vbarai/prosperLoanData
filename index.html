@@ -23,7 +23,7 @@
 
           "use strict";
           var margin = 75,
-              width = 1400 - margin,
+              width = 900 - margin,
               height = 600 - margin;
 
           d3.select("body").append("h2").text("Prosper Loan Distribution by Employment & Employment Duration");
@@ -47,7 +47,7 @@
           x.tickFormat = "%Y";
           x.timeInterval = 4;*/
           myChart.addSeries("EmploymentStatus", dimple.plot.bar);
-          myChart.addLegend(750, 30, 500, 30, "right");
+          myChart.addLegend(400, 30, 400, 30, "right");
          /* myChart.addSeries("Occupation", dimple.plot.scatter); */
           myChart.draw();
 
