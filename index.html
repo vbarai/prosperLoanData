@@ -21,12 +21,16 @@
         D3.js setup code
       */
 
+    data = data.filter(function(d){
+        if(d.BorrowerState.length>0 && d.EmploymentStatusDuration.length>0){return true};
+        });
+
           "use strict";
           var margin = 75,
-              width = 900 - margin,
+              width = 1000 - margin,
               height = 600 - margin;
 
-        /*  d3.select("body").append("h2").text("Prosper Loan Distribution by State & Employment Duration"); */
+        d3.select("body").append("h3").text("Distribution by State");
 
           var svg = d3.select("body")
             .append("svg")
@@ -40,16 +44,14 @@
       */
 
           var myChart = new dimple.chart(svg, data);
-          /*var x = myChart.addTimeAxis("x", "LoanOriginationDate"); */
           var x=myChart.addCategoryAxis("x","BorrowerState")
-          myChart.addMeasureAxis("y", "LoanOriginalAmount");
-          /*x.dateParseFormat = "%Y%M";
-          x.tickFormat = "%Y";
-          x.timeInterval = 4;*/
+          var y=myChart.addMeasureAxis("y", "LoanOriginalAmount");
+          y.title="LoanOriginalAmount ($)";
           myChart.addSeries("EmploymentStatus", dimple.plot.bar);
-          myChart.addLegend(400, 30, 400, 30, "right");
-         /* myChart.addSeries("Occupation", dimple.plot.scatter); */
+          myChart.addLegend(400, 30, 400, 30, "rig;ht");
           myChart.draw();
+
+          d3.select("body").append("h3").text("Distribution by Employment Duration(Months)");
 
           var svg1 = d3.select("body")
             .append("svg")
@@ -59,16 +61,17 @@
                 .attr('class','chart');
 
           var myChart1 = new dimple.chart(svg1, data);
-          var x=myChart1.addCategoryAxis("x","EmploymentStatusDuration")
-          myChart1.addMeasureAxis("y", "LoanOriginalAmount");
+          var x1=myChart1.addCategoryAxis("x","EmploymentStatusDuration")
+          /*x1.ticks=20; */
+          var y1=myChart1.addMeasureAxis("y", "LoanOriginalAmount");
+          y1.title="LoanOriginalAmount ($)";
+          x1.title="Employment Duration (Months)";
           myChart1.addColorAxis("LoanOriginalAmount", ["green", "yellow", "red"]);
-         /* myChart1.addSeries(null, dimple.plot.line);*/
-          /*myChart1.addLegend(750, 30, 500, 30, "right");*/
-          x.addOrderRule("EmploymentStatusDuration");
-         /* myChart.addSeries("EstimatedLoss", dimple.plot.scatter);*/
+          x1.addOrderRule("EmploymentStatusDuration");
+          /*x1.tickFormat = "d";
+          x1.tickValues=d3.range(0,560,24);*/
           var lines = myChart1.addSeries(null, dimple.plot.line);
           lines.lineWeight = 3;
-          lines.lineMarkers = true;
           myChart1.draw();
         };
 
@@ -80,7 +83,9 @@
     Use D3 (not dimple.js) to load the TSV file
     and pass the contents of it to the draw function
     */
-  d3.csv("prosperLoanData.csv", draw);
+  d3.csv("prosperLoanData.csv",draw);
+
   </script>
 </body>
 </html>
+
