@@ -7,7 +7,7 @@ In the GitHub sample data the clear pattern may not appear but locally run code 
 !['Bar Chart 1'](Distribution by State & Employment.JPG)
 3) Second graph shows that please with the less experiance or who just started the employment are taking a more loan compare to the 
    other people.
-!['Bar Chart 2'](DistributionbyEmploymentDuration.JPG)
+!['Bar Chart 2'](Distribution by Employment Duration.JPG)
 
 # Design 
 Stacked bar graph for Employment Status was choosen to incorporate as much variable as possible in a very cleanest way. Occupation was choosen 
