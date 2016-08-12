@@ -1,91 +1,97 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
     <style>
-      circle.dimple-series-1 {
-        fill: red;
-      }
+        circle.dimple-series-1 {
+            fill: red;
+        }
 
-      h2{
-
-      }
+        h2 {}
     </style>
 
     <script type="text/javascript">
-      function draw(data) {
+        function draw(data) {
 
-      /*
-        D3.js setup code
-      */
+            /*
+              D3.js setup code
+            */
+            /* Filter out the data whose BorrowerState is null and EmploymentStatusDuration is not 0*/
+            data = data.filter(function(d) {
+                if (d.BorrowerState.length > 0 && d.EmploymentStatusDuration > 0) {
+                    return true
+                };
+            });
 
-    data = data.filter(function(d){
-        if(d.BorrowerState.length>0 && d.EmploymentStatusDuration.length>0){return true};
-        });
+            /* Set canvas area*/
+            "use strict";
+            var margin = 75,
+                width = 1000 - margin,
+                height = 600 - margin;
 
-          "use strict";
-          var margin = 75,
-              width = 1000 - margin,
-              height = 600 - margin;
+            d3.select("body").append("h3").text("Distribution by State");
+            d3.select("body").append("h5").text("Below chart drawn between State and Sum of Loan amount categorised by Employment Status. Graph shows California state leading over all other state in loan borrowing.");
 
-        d3.select("body").append("h3").text("Distribution by State");
+            /* Add SVG and Set size*/
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", width + margin)
+                .attr("height", height + margin)
+                .append('g')
+                .attr('class', 'chart');
 
-          var svg = d3.select("body")
-            .append("svg")
-              .attr("width", width + margin)
-              .attr("height", height + margin)
-            .append('g')
-                .attr('class','chart');
+            /*
+              Dimple.js Chart construction code
+            */
+            /*Bind Data to chart*/
+            var myChart = new dimple.chart(svg, data);
+            /*Add X & Y axis to chart*/
+            var x = myChart.addCategoryAxis("x", "BorrowerState")
+            var y = myChart.addMeasureAxis("y", "LoanOriginalAmount");
+            y.title = "Sum of LoanOriginalAmount ($)";
+            /*Define chart type and Legend */
+            myChart.addSeries("EmploymentStatus", dimple.plot.bar);
+            myChart.addLegend(400, 30, 400, 30, "rig;ht");
+            myChart.draw();
 
-      /*
-        Dimple.js Chart construction code
-      */
-
-          var myChart = new dimple.chart(svg, data);
-          var x=myChart.addCategoryAxis("x","BorrowerState")
-          var y=myChart.addMeasureAxis("y", "LoanOriginalAmount");
-          y.title="LoanOriginalAmount ($)";
-          myChart.addSeries("EmploymentStatus", dimple.plot.bar);
-          myChart.addLegend(400, 30, 400, 30, "rig;ht");
-          myChart.draw();
-
-          d3.select("body").append("h3").text("Distribution by Employment Duration(Months)");
-
-          var svg1 = d3.select("body")
-            .append("svg")
-              .attr("width", width + margin)
-              .attr("height", height + margin)
-            .append('g')
-                .attr('class','chart');
-
-          var myChart1 = new dimple.chart(svg1, data);
-          var x1=myChart1.addCategoryAxis("x","EmploymentStatusDuration")
-          /*x1.ticks=20; */
-          var y1=myChart1.addMeasureAxis("y", "LoanOriginalAmount");
-          y1.title="LoanOriginalAmount ($)";
-          x1.title="Employment Duration (Months)";
-          myChart1.addColorAxis("LoanOriginalAmount", ["green", "yellow", "red"]);
-          x1.addOrderRule("EmploymentStatusDuration");
-          /*x1.tickFormat = "d";
-          x1.tickValues=d3.range(0,560,24);*/
-          var lines = myChart1.addSeries(null, dimple.plot.line);
-          lines.lineWeight = 3;
-          myChart1.draw();
+            d3.select("body").append("h3").text("Distribution by Employment Duration(Months)");
+            d3.select("body").append("h5").text("Chart Drawn between Employment Duration and Loan amount. Chart shows people with less experiance taking more loan as compare to the more experiance people. Color shade is used to highlight the total loan amount.");
+            /* Add SVG and Set size*/
+            var svg1 = d3.select("body")
+                .append("svg")
+                .attr("width", width + margin)
+                .attr("height", height + margin)
+                .append('g')
+                .attr('class', 'chart');
+            /*Bind Data to chart*/
+            var myChart1 = new dimple.chart(svg1, data);
+            /*Add X & Y axis to chart*/
+            var x1 = myChart1.addCategoryAxis("x", "EmploymentStatusDuration")
+            var y1 = myChart1.addMeasureAxis("y", "LoanOriginalAmount");
+            y1.title = "Sum of LoanOriginalAmount ($)";
+            x1.title = "Employment Duration (Months)";
+            myChart1.addColorAxis("LoanOriginalAmount", ["green", "yellow", "red"]);
+            /*Order x axis by EmploymentStatusDuration*/
+            x1.addOrderRule("EmploymentStatusDuration");
+            /*Define chart type  */
+            var lines = myChart1.addSeries(null, dimple.plot.bar);
+            lines.lineWeight = 3;
+            myChart1.draw();
         };
-
     </script>
-  </head>
+</head>
+
 <body>
-  <script type="text/javascript">
-  /*
-    Use D3 (not dimple.js) to load the TSV file
-    and pass the contents of it to the draw function
-    */
-  d3.csv("prosperLoanData.csv",draw);
-
-  </script>
+    <script type="text/javascript">
+        /*
+                    Use D3 (not dimple.js) to load the TSV file
+                    and pass the contents of it to the draw function
+                    */
+        d3.csv("prosperLoanData1.csv", draw);
+    </script>
 </body>
-</html>
 
+</html>
