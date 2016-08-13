@@ -5,14 +5,16 @@ In the GitHub sample data the clear pattern may not appear but locally run code 
 1) First Gragh clealy show that CA (California) is a leading state for taking a Loan.
 2) First graph also shows most of the loan taken by Employeed people.
 !['Bar Chart 1'](Distribution by State & Employment.JPG)
-3) Second graph shows that please with the less experiance or who just started the employment are taking a more loan compare to the 
-   other people.
+3) Second graph shows that people with the less experiance are taking a more loan ( or more people taking loan ) compare to the other people.
 !['Bar Chart 2'](Distribution by Employment Duration.JPG)
 
 # Design 
 Stacked bar graph for Employment Status was choosen to incorporate as much variable as possible in a very cleanest way. Occupation was choosen 
 Instead of Employment Status  but it was drop as Employment Status give better breakup of data.
+Simple bar chart should have serve the purpose to show that CA is leading in loan borrowing but it is always good practive to give 
+more details to the user in a single graph if it is not graph complicated to understand hence Employment Status was introduced later to show breakup. 
 The initial design was to draw line graph between Employment Duration and Loan amount. After getting a review it was changed to bar chart.
+
 
 # Feedback 
 Base on the below feedback graph design was changed such as I removed circles, title was given to each graph with short description, 
@@ -40,4 +42,5 @@ I think you should remove them before plotting it.
 Dataset :From the given dataset I used "Intermediate-Loan Data from Prosper" data for my visualisation.
 Code    : http://bl.ocks.org/
           http://d3js.org/
+		  http://dimplejs.org/
 

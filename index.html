@@ -32,8 +32,10 @@
                 width = 1000 - margin,
                 height = 600 - margin;
 
+            d3.select("body").append("h2").text("Prosper Loan Data Analysis");
+            d3.select("body").append("h4").text("Prosper is America’s first peer-to-peer lending marketplace, with more than 2 million members and over $2,000,000,000 in funded loans. Here we use the data available to the public from Prosper, which contains all the listings and loans ever created with 81 variables on each loan/listing, to do some data analysis. As a part of DAND visualization project, I will explore some of the valiables like loan amount and its distribution across the states and employment details and try to let data tell some ‘behind scene’ stories about the borrowers");
             d3.select("body").append("h3").text("Distribution by State");
-            d3.select("body").append("h5").text("Below chart drawn between State and Sum of Loan amount categorised by Employment Status. Graph shows California state leading over all other state in loan borrowing.");
+            d3.select("body").append("h4").text("Below chart drawn between State and Sum of Loan amount categorised by Employment Status. Graph shows California state leading over all other state in loan borrowing. Each bar of state shows that Employed people are major part of borrowers");
 
             /* Add SVG and Set size*/
             var svg = d3.select("body")
@@ -54,11 +56,11 @@
             y.title = "Sum of LoanOriginalAmount ($)";
             /*Define chart type and Legend */
             myChart.addSeries("EmploymentStatus", dimple.plot.bar);
-            myChart.addLegend(400, 30, 400, 30, "rig;ht");
+            myChart.addLegend(400, 30, 400, 30, "right");
             myChart.draw();
 
             d3.select("body").append("h3").text("Distribution by Employment Duration(Months)");
-            d3.select("body").append("h5").text("Chart Drawn between Employment Duration and Loan amount. Chart shows people with less experiance taking more loan as compare to the more experiance people. Color shade is used to highlight the total loan amount.");
+            d3.select("body").append("h4").text("Chart Drawn between Employment Duration and Loan amount. Chart shows that people with the less experiance are taking a more loan ( or more people taking loan ) compare to the other people.");
             /* Add SVG and Set size*/
             var svg1 = d3.select("body")
                 .append("svg")
@@ -66,6 +68,7 @@
                 .attr("height", height + margin)
                 .append('g')
                 .attr('class', 'chart');
+
             /*Bind Data to chart*/
             var myChart1 = new dimple.chart(svg1, data);
             /*Add X & Y axis to chart*/
@@ -73,12 +76,10 @@
             var y1 = myChart1.addMeasureAxis("y", "LoanOriginalAmount");
             y1.title = "Sum of LoanOriginalAmount ($)";
             x1.title = "Employment Duration (Months)";
-            myChart1.addColorAxis("LoanOriginalAmount", ["green", "yellow", "red"]);
             /*Order x axis by EmploymentStatusDuration*/
             x1.addOrderRule("EmploymentStatusDuration");
             /*Define chart type  */
-            var lines = myChart1.addSeries(null, dimple.plot.bar);
-            lines.lineWeight = 3;
+            myChart1.addSeries(null, dimple.plot.bar);
             myChart1.draw();
         };
     </script>

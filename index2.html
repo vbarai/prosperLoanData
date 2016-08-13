@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <!script src="d3.min.js"><!/script>
+    <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
+    <!script src="dimple.v2.0.0.min.js"><!/script>
+    <style>
+      circle.dimple-series-1 {
+        fill: red;
+      }
+
+      h2{
+
+      }
+    </style>
+
+    <script type="text/javascript">
+      function draw(data) {
+
+      /*
+        D3.js setup code
+      */
+
+          "use strict";
+          var margin = 75,
+              width = 1400 - margin,
+              height = 600 - margin;
+
+          d3.select("body").append("h2").text("Prosper Loan Distribution by Employment & ProsperRating");
+
+          var svg = d3.select("body")
+            .append("svg")
+              .attr("width", width + margin)
+              .attr("height", height + margin)
+            .append('g')
+                .attr('class','chart');
+
+      /*
+        Dimple.js Chart construction code
+      */
+
+          var myChart = new dimple.chart(svg, data);
+          /*var x = myChart.addTimeAxis("x", "LoanOriginationDate"); */
+          var x=myChart.addCategoryAxis("x","BorrowerState")
+          myChart.addMeasureAxis("y", "LoanOriginalAmount");
+          /*x.dateParseFormat = "%Y%M";
+          x.tickFormat = "%Y";
+          x.timeInterval = 4;*/
+          myChart.addSeries("EmploymentStatus", dimple.plot.bar);
+          myChart.addLegend(750, 30, 500, 30, "right");
+         /* myChart.addSeries("Occupation", dimple.plot.scatter); */
+          myChart.draw();
+
+          var svg1 = d3.select("body")
+            .append("svg")
+              .attr("width", width + margin)
+              .attr("height", height + margin)
+            .append('g')
+                .attr('class','chart');
+
+          var myChart1 = new dimple.chart(svg1, data);
+          var x=myChart1.addCategoryAxis("x","EmploymentStatusDuration")
+          myChart1.addMeasureAxis("y", "LoanOriginalAmount");
+          myChart1.addColorAxis("LoanOriginalAmount", ["green", "yellow", "red"]);
+         /* myChart1.addSeries(null, dimple.plot.line);*/
+          /*myChart1.addLegend(750, 30, 500, 30, "right");*/
+          x.addOrderRule("EmploymentStatusDuration");
+         /* myChart.addSeries("EstimatedLoss", dimple.plot.scatter);*/
+          var lines = myChart1.addSeries(null, dimple.plot.line);
+          lines.lineWeight = 3;
+          lines.lineMarkers = true;
+          myChart1.draw();
+        };
+
+    </script>
+  </head>
+<body>
+  <script type="text/javascript">
+  /*
+    Use D3 (not dimple.js) to load the TSV file
+    and pass the contents of it to the draw function
+    */
+  d3.csv("prosperLoanData1.csv", draw);
+  </script>
+</body>
+</html>
