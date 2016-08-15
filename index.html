@@ -81,7 +81,36 @@
             /*Define chart type  */
             myChart1.addSeries(null, dimple.plot.bar);
             myChart1.draw();
+             // Invoke the cleaning algorithm to draw 1 label in every 20
+            cleanAxis(x1, 10);
         };
+        // Pass in an axis object and an interval.
+         var cleanAxis = function (axis, oneInEvery) {
+             // This should have been called after draw, otherwise do nothing
+             if (axis.shapes.length >= 0) {
+                 // Leave the first label
+                 var del = false;
+                 // If there is an interval set
+                 if (oneInEvery > 1) {
+                     // Operate on all the axis text
+                     axis.shapes.selectAll("text")
+                     .each(function (d) {
+                         // Remove all but the nth label
+                         if (del % oneInEvery !== 0) {
+                             this.remove();
+                             // Find the corresponding tick line and remove
+                             axis.shapes.selectAll("line").each(function (d2) {
+                                 if (d === d2) {
+                                     this.remove();
+                                 }
+                             });
+                         }
+                         del += 1;
+                     });
+                 }
+             }
+         };
+
     </script>
 </head>
 
